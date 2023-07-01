@@ -3,7 +3,21 @@ import { useState } from "react";
 function App() {
   const [calc, setCalc] = useState("");
   const [result, setResult] = useState("");
+
   const ops = ["/", "*", "+", "-", "."];
+
+  const createDigits = () => {
+    const digits = [];
+    for (let i = 1; i < 10; i++) {
+      digits.push(
+        <button onClick={() => updateCalc(i.toString())} key={i}>
+          {i}
+        </button>
+      );
+    }
+    return digits;
+  };
+
   const updateCalc = (value) => {
     if (
       (ops.includes(value) && calc === "") ||
@@ -17,24 +31,13 @@ function App() {
       setResult(eval(calc + value).toString());
     }
   };
-  const createDigits = () => {
-    const digits = [];
-    for (let i = 1; i, 10; i++) {
-      digits.push(
-        <button onClick={() => updateCalc(i.toString())} key={1}>
-          {1}
-        </button>
-      );
-    }
-    return digits;
-  };
 
   const calculate = () => {
     setCalc(eval(calc).toString());
   };
 
   const deleteLast = () => {
-    if (calc == "") {
+    if (calc === "") {
       return;
     }
     const value = calc.slice(0, -1);
@@ -45,7 +48,7 @@ function App() {
     <div className="App">
       <div className="calculator">
         <div className="display">
-          {result ? <span>(0)</span> : ""}
+          <span>{result ? "(" + result + ")" : ""}</span>
           {calc || ""}&nbsp;
         </div>
         <div className="operators">
